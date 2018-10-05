@@ -1,0 +1,7 @@
+---
+- name: ensure automation agent services
+  service:
+    name: '{{ item }}'
+    state: '{{ automation_agent_service_state }}'
+    enabled: '{{ automation_agent_service_enabled }}'
+  with_items: '{{ automation_agent_service_names }}'
