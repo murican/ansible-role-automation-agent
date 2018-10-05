@@ -1,0 +1,60 @@
+---
+automation_agent_package_state: present
+automation_agent_service_state: started
+automation_agent_service_enabled: true
+automation_agent_service_names:
+- mongodb-mms-automation-agent.service
+
+automation_agent_package_name: mongodb-mms-automation-agent-manager-5.4.9.5483-1.x86_64.rhel7.rpm
+automation_agent_package_url: https://127.0.0.1:8443/download/agent/automation/{{ automation_agent_package_name }}
+automation_agent_package_path: /tmp
+automation_agent_package_dest: '{{ automation_agent_package_path }}/{{ automation_agent_package_name }}'
+
+automation_agent_flush_handlers: true
+automation_agent_os_user: mongod
+automation_agent_config_file: /etc/mongodb-mms/automation-agent.config
+automation_agent_data_path: /data
+automation_agent_proxy_enabled: false
+
+config_param_mms_group_id: ''
+config_param_mms_api_key: ''
+config_param_mms_base_url: http://127.0.0.1:8080
+config_param_mms_config_backup: /var/lib/mongodb-mms-automation/mms-cluster-config-backup.json
+config_param_log_file: /var/log/mongodb-mms-automation/automation-agent.log
+config_param_log_level: INFO
+config_param_max_log_files: 10
+config_param_max_log_file_size: 268435456
+config_param_server_pool_key: ''
+config_param_server_pool_state_file: /var/lib/mongodb-mms-automation/server-pool.state
+config_param_server_pool_properties_file: /etc/mongodb-mms/server-pool.properties
+config_param_http_proxy: ''
+
+# For additional optional settings, please see
+# https://docs.opsmanager.mongodb.com/current/reference/automation-agent/
+automation_agent_config:
+- name: mmsGroupId
+  value: '{{ config_param_mms_group_id }}'
+- name: mmsApiKey
+  value: '{{ config_param_mms_api_key }}'
+- name: mmsBaseUrl
+  value: '{{ config_param_mms_base_url }}'
+- name: mmsConfigBackup
+  value: '{{ config_param_mms_config_backup }}'
+- name: logFile
+  value: '{{ config_param_log_file }}'
+- name: logLevel
+  value: '{{ config_param_log_level }}'
+- name: maxLogFiles
+  value: '{{ config_param_max_log_files }}'
+- name: maxLogFileSize
+  value: '{{ config_param_max_log_file_size }}'
+- name: serverPoolKey
+  value: '{{ config_param_server_pool_key }}'
+- name: serverPoolStateFile
+  value: '{{ config_param_server_pool_state_file }}'
+- name: serverPoolPropertiesFile
+  value: '{{ config_param_server_pool_properties_file }}'
+
+automation_agent_proxy_config:
+- name: httpProxy
+  value: '{{ config_param_http_proxy }}'
