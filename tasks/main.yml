@@ -1,0 +1,22 @@
+---
+- name: include installation tasks
+  import_tasks: install.yml
+  tags:
+  - automation-agent
+  - automation-agent-install
+
+- name: include configuration tasks
+  import_tasks: config.yml
+  tags:
+  - automation-agent
+  - automation-agent-config
+
+- name: flush handlers
+  meta: flush_handlers
+  when: automation_agent_flush_handlers
+
+- name: include service tasks
+  import_tasks: service.yml
+  tags:
+  - automation-agent
+  - automation-agent-service
