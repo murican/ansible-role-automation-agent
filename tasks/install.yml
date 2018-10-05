@@ -1,0 +1,19 @@
+---
+- name: ensure directory for download
+  file:
+    state: directory
+    path: '{{ automation_agent_package_path }}'
+
+- name: download package from ops manager host
+  get_url:
+    url: '{{ automation_agent_package_url }}'
+    dest: '{{ automation_agent_package_dest }}'
+  register: package_downloaded
+
+- name: install automation agent package
+  when: package_downloaded.changed
+  package:
+    name: '{{ automation_agent_package_dest }}'
+    state: '{{ automation_agent_package_state }}'
+  notify:
+  - restart automation-agent
