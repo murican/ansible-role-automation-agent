@@ -1,0 +1,46 @@
+---
+- name: ensure os group
+  group:
+    name: '{{ automation_agent_os_user }}'
+    state: present
+
+- name: ensure os user
+  user:
+    name: '{{ automation_agent_os_user }}'
+    state: present
+
+- name: ensure correct owner and file mode
+  file:
+    path: '{{ automation_agent_config_file }}'
+    owner: '{{ automation_agent_os_user }}'
+    group: '{{ automation_agent_os_user }}'
+    mode: '0600'
+
+- name: configure automation agent parameters
+  lineinfile:
+    path: '{{ automation_agent_config_file }}'
+    regexp: '^{{ item.name }}='
+    line: '{{ item.name }}={{ item.value }}'
+  with_items:
+  - '{{ automation_agent_config }}'
+  notify:
+  - restart automation-agent
+
+- name: configure proxy setting if enabled
+  when: automation_agent_proxy_enabled
+  lineinfile:
+    path: '{{ automation_agent_config_file }}'
+    regexp: '{{ item.name }}='
+    line: '{{ item.name }}={{ item.value }}'
+  with_items:
+  - '{{ automation_agent_proxy_config }}'
+  notify:
+  - restart automation-agent
+
+- name: ensure data directory and owner
+  file:
+    path: '{{ automation_agent_data_path }}'
+    state: directory
+    owner: '{{ automation_agent_os_user }}'
+    group: '{{ automation_agent_os_user }}'
+    mode: '0755'
