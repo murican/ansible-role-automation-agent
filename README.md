@@ -24,11 +24,11 @@ This role will install and configure an MongoDB automation agent. An up & runnin
 |:-----|:------------|:--------|
 | automation_agent_package_name | Name of the Package to install | mongodb-mms-automation-agent-manager-5.4.9.5483-1.ppc64le.rhel7.rpm |
 | automation_agent_package_state | Package state | present |
-| automation_agent_service_names | List of service name | automation_agent_service_names |
+| automation_agent_service_names | List of service name | mongodb-mms-automation-agent.service |
 | automation_agent_service_state | Service state | started |
 | automation_agent_service_enabled | Service enabled | true |
 | automation_agent_package_path  | Path where RPM is saved | /opt/mongodb |
-| automation_agent_package_url | The URL where the RPM is downloaded from |  |
+| automation_agent_package_url | The URL where the RPM is downloaded from | not set |
 
 
 # Tags
